@@ -11,6 +11,8 @@ type Quaternion struct {
 	Z float64
 }
 
+type RotMat [3][3]float64
+
 func (quat *Quaternion) Set(w, x, y, z float64) Quaternion {
 	q := Quaternion{W: w, X: x, Y: y, Z: z}
 	return q
@@ -40,5 +42,22 @@ func (quat *Quaternion) ToEuler() (float64, float64, float64) { //With ZYX order
 	pitch := math.Asin(-2 * (q.X*q.Z - q.W*q.Y))
 	roll := math.Atan(2 * (q.W*q.X + q.Y*q.Z) / (q.W*q.W - q.X*q.X - q.Y*q.Y + q.Z*q.Z))
 	return yaw, pitch, roll
+}
 
+func (quat *Quaternion) ToRotMat() RotMat {
+	q := *quat
+	R := RotMat{}
+	R[0][0] = 1 - 2*q.Y*q.Y - 2*q.Z*q.Z
+	R[0][1] = 2*q.X*q.Y - 2*q.W*q.Z
+	R[0][2] = 2*q.X*q.Z + 2*q.W*q.Y
+
+	R[1][0] = 2*q.X*q.Y + 2*q.W*q.Z
+	R[1][1] = 1 - 2*q.X*q.X - 2*q.Z*q.Z
+	R[1][2] = 2*q.Y*q.Z - 2*q.W*q.X
+
+	R[2][0] = 2*q.X*q.Z - 2*q.W*q.Y
+	R[2][1] = 2*q.Y*q.Z + 2*q.W*q.X
+	R[2][2] = 1 - 2*q.X*q.X - 2*q.Y*q.Y
+
+	return R
 }
