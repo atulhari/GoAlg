@@ -61,3 +61,44 @@ func (quat *Quaternion) ToRotMat() RotMat {
 
 	return R
 }
+
+func Sgn(x float64) float64 {
+	switch {
+	case x < 0:
+		return -1
+	case x > 0:
+		return +1
+	}
+	return 0
+}
+
+func RotMatToQuat(RotMat) Quaternion {
+	R := RotMat{}
+	q := Quaternion{}
+	q.W = math.Sqrt((R[0][0] + R[1][1] + R[2][2] + 1.0)) / 2.0
+	q.X = math.Sqrt((R[0][0] - R[1][1] - R[2][2] + 1.0)) / 2.0
+	q.Y = math.Sqrt((-R[0][0] + R[1][1] - R[2][2] + 1.0)) / 2.0
+	q.Z = math.Sqrt((-R[0][0] - R[1][1] + R[2][2] + 1.0)) / 2.0
+
+	if q.W < 0.0 {
+		q.W = 0.0
+	}
+	if q.X < 0.0 {
+		q.X = 0.0
+	}
+	if q.Y < 0.0 {
+		q.Y = 0.0
+	}
+	if q.Z < 0.0 {
+		q.Z = 0.0
+	}
+
+	if q.W >= q.X && q.W >= q.Y && q.W >= q.Z {
+		q.W *= 1.0
+		q.X *= Sgn(R[2][1] - R[1][2])
+		q.Y *= Sgn(R[0][2] - R[2][0])
+		q.Z *= Sgn(R[1][0] - R[0][1])
+	}
+
+	return q
+}
