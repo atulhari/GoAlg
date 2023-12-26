@@ -64,7 +64,6 @@ func TestToRotMat(t *testing.T) {
 func TestRotMatToQuat(t *testing.T) {
 
 	quat := RotMatToQuat(rotmat)
-
 	if math.Abs(quat.W-eulerQ[0]) > 1e-5 ||
 		math.Abs(quat.X-eulerQ[1]) > 1e-5 ||
 		math.Abs(quat.Y-eulerQ[2]) > 1e-5 ||
