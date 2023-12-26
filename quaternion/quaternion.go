@@ -72,9 +72,17 @@ func Sgn(x float64) float64 {
 	return 0
 }
 
-func RotMatToQuat(RotMat) Quaternion {
-	R := RotMat{}
-	q := Quaternion{}
+func Norm(q0 float64, q1 float64, q2 float64, q3 float64) float64 {
+	return math.Sqrt(q0*q0 + q1*q1 + q2*q2 + q3*q3)
+}
+
+func RotMatToQuat(R RotMat) Quaternion {
+	q := Quaternion{
+		W: 0,
+		X: 0,
+		Y: 0,
+		Z: 0,
+	}
 	q.W = math.Sqrt((R[0][0] + R[1][1] + R[2][2] + 1.0)) / 2.0
 	q.X = math.Sqrt((R[0][0] - R[1][1] - R[2][2] + 1.0)) / 2.0
 	q.Y = math.Sqrt((-R[0][0] + R[1][1] - R[2][2] + 1.0)) / 2.0
@@ -98,7 +106,30 @@ func RotMatToQuat(RotMat) Quaternion {
 		q.X *= Sgn(R[2][1] - R[1][2])
 		q.Y *= Sgn(R[0][2] - R[2][0])
 		q.Z *= Sgn(R[1][0] - R[0][1])
+	} else if q.X >= q.Y && q.X >= q.Z && q.X >= q.W {
+		q.W *= Sgn(R[2][1] - R[1][2])
+		q.X *= 1.0
+		q.Y *= Sgn(R[1][0] - R[0][1])
+		q.Z *= Sgn(R[0][2] - R[2][0])
+	} else if q.Y >= q.X && q.Y >= q.Z && q.Y >= q.W {
+		q.W *= Sgn(R[0][2] - R[2][0])
+		q.X *= Sgn(R[1][0] - R[0][1])
+		q.Y *= 1.0
+		q.Z *= Sgn(R[2][1] - R[1][2])
+	} else if q.Z >= q.X && q.Z >= q.Y && q.Z >= q.W {
+		q.W *= Sgn(R[1][0] - R[0][1])
+		q.X *= Sgn(R[2][0] - R[0][2])
+		q.Y *= Sgn(R[2][1] - R[1][2])
+		q.Z *= 1.0
+	} else {
+		print("Error")
 	}
+
+	r := Norm(q.W, q.X, q.Y, q.Z)
+	q.W /= r
+	q.X /= r
+	q.Y /= r
+	q.Z /= r
 
 	return q
 }
