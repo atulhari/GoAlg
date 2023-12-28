@@ -135,3 +135,11 @@ func RotMatToQuat(R RotMat) Quaternion {
 
 	return q
 }
+
+func (quat *Quaternion) Identity() *Quaternion {
+	quat.W = 1.0
+	quat.X = 0.0
+	quat.Y = 0.0
+	quat.Z = 0.0
+	return quat
+}
