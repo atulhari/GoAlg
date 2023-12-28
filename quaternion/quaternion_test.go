@@ -71,3 +71,14 @@ func TestRotMatToQuat(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestIdentity(t *testing.T) {
+	quat := Quaternion{}
+	quat.Identity()
+	if math.Abs(quat.W-1.0) > 1e-5 ||
+		math.Abs(quat.X-0.0) > 1e-5 ||
+		math.Abs(quat.Y-0.0) > 1e-5 ||
+		math.Abs(quat.Z-0.0) > 1e-5 {
+		t.Fail()
+	}
+}
