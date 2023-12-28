@@ -62,6 +62,7 @@ func (quat *Quaternion) ToRotMat() RotMat {
 	return R
 }
 
+// Helper function TODO: Move to a seperate file
 func Sgn(x float64) float64 {
 	switch {
 	case x < 0:
@@ -72,6 +73,7 @@ func Sgn(x float64) float64 {
 	return 0
 }
 
+// Helper function TODO: Move to a seperate file
 func Norm(q0 float64, q1 float64, q2 float64, q3 float64) float64 {
 	return math.Sqrt(q0*q0 + q1*q1 + q2*q2 + q3*q3)
 }
