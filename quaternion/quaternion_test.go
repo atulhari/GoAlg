@@ -82,3 +82,10 @@ func TestIdentity(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestNorm(t *testing.T) {
+	quat := Quaternion{W: 1.0, X: 0.0, Y: 0.0, Z: 0.0}
+	if math.Abs(quat.Norm()-1.0) > 1e-5 {
+		t.Fail()
+	}
+}
