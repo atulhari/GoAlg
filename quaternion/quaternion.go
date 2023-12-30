@@ -147,3 +147,7 @@ func (quat *Quaternion) Identity() *Quaternion {
 func (quat *Quaternion) Norm() float64 {
 	return math.Sqrt(quat.W*quat.W + quat.X*quat.X + quat.Y*quat.Y + quat.Z*quat.Z)
 }
+
+func (quat *Quaternion) SquaredNorm() float64 {
+	return quat.W*quat.W + quat.X*quat.X + quat.Y*quat.Y + quat.Z*quat.Z
+}
