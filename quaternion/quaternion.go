@@ -153,5 +153,5 @@ func (quat *Quaternion) SquaredNorm() float64 {
 }
 
 func (quat *Quaternion) Conjugate() Quaternion {
-	return Quaternion{W: quat.W, X: quat.X, Y: quat.Y, Z: quat.Z}
+	return Quaternion{W: quat.W, X: -quat.X, Y: -quat.Y, Z: -quat.Z}
 }
