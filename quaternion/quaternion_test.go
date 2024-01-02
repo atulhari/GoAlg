@@ -96,3 +96,14 @@ func TestSquaredNorm(t *testing.T) {
 		t.Fail()
 	}
 }
+
+func TestConjugate(t *testing.T) {
+	quat := Quaternion{W: 1.0, X: 2.0, Y: 3.0, Z: 4.0}
+	quat = quat.Conjugate()
+	if math.Abs(quat.W-1.0) > 1e-5 ||
+		math.Abs(quat.X+2.0) > 1e-5 ||
+		math.Abs(quat.Y+3.0) > 1e-5 ||
+		math.Abs(quat.Z+4.0) > 1e-5 {
+		t.Fail()
+	}
+}
