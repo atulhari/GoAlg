@@ -157,5 +157,13 @@ func (quat *Quaternion) Conjugate() Quaternion {
 }
 
 func (quat *Quaternion) Inverse() Quaternion {
-	//TODO
+	num := quat.SquaredNorm()
+	var invQuat float64
+	if num != 0 {
+		invQuat = 1.0 / num
+	} else {
+		invQuat = 0.0
+	}
+	conjQuat := quat.Conjugate()
+	return Quaternion{W: conjQuat.W * invQuat, X: conjQuat.X * invQuat, Y: conjQuat.Y * invQuat, Z: conjQuat.Z * invQuat}
 }
